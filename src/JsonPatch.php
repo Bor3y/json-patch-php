@@ -291,9 +291,13 @@ class JsonPatch
   private static function diff_assoc($path, $src, $dst)
   {
     $result = array();
-    if (count($src) == 0 && count($dst) != 0)
+      
+    if(!$dst || !$src){
+       $result[] = array("op" => "replace", "path" => "$path", "value" => $dst);
+    }
+    else if (count($src) == 0 && count($dst) != 0)
     {
-      $result[] = array("op" => "replace", "path" => "$path", "value" => $dst);
+       $result[] = array("op" => "replace", "path" => "$path", "value" => $dst);
     }
     else
     {
